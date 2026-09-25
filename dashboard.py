@@ -13,10 +13,6 @@ from tabs.explorer import explorer_tab
 from resume_matcher import resume_matcher_tab
 from live_jobs import live_jobs_tab
 
-
-
-
-
 from database import (
     get_user,
     update_profile,
@@ -416,8 +412,8 @@ def dashboard_header():
         "using your job-market dataset."
     )
 
-
     st.divider()
+
 
 # =========================================================
 # KPI SECTION
@@ -555,6 +551,8 @@ def dashboard_footer():
     st.caption(
         "Career Intelligence Platform • Analyze • Discover • Grow"
     )
+
+
 # =========================================================
 # MAIN DASHBOARD
 # =========================================================
@@ -656,11 +654,14 @@ def dashboard():
     )
 
     if use_live_api:
+
         st.sidebar.caption(
             "Selected Job Role and Location will be used "
             "for live job search."
         )
+
     else:
+
         st.sidebar.caption(
             "Live API search is disabled."
         )
@@ -727,14 +728,29 @@ def dashboard():
     # KPI
     # -----------------------------------------------------
 
-    show_kpis(
-        filtered_df,
-        skill_counts,
-        role_counts,
-        company_column
+    filter_applied = (
+        bool(selected_location)
+        or bool(selected_roles)
+        or bool(selected_experience)
     )
 
-    st.write("")
+    if filter_applied:
+
+        show_kpis(
+            filtered_df,
+            skill_counts,
+            role_counts,
+            company_column
+        )
+
+        st.write("")
+
+    else:
+
+        st.info(
+            "🔎 Please select a Market Filter to view "
+            "job-market KPIs and insights."
+        )
 
     # -----------------------------------------------------
     # DATASET INFORMATION
@@ -832,10 +848,6 @@ def dashboard():
         )
 
     # -----------------------------------------------------
-    # FOOTER
-    # -----------------------------------------------------
-
-    # -----------------------------------------------------
     # RESUME MATCHER
     # -----------------------------------------------------
 
@@ -845,13 +857,24 @@ def dashboard():
             filtered_df
         )
 
+    # -----------------------------------------------------
+    # LIVE JOBS
+    # -----------------------------------------------------
+
     with live_jobs:
+
         if live_jobs_tab is None:
+
             st.error(
                 "❌ live_jobs.py could not be imported."
             )
+
         else:
-            live_jobs_tab(
-            )
+
+            live_jobs_tab()
+
+    # -----------------------------------------------------
+    # FOOTER
+    # -----------------------------------------------------
 
     dashboard_footer()
