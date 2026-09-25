@@ -1,5 +1,10 @@
 import streamlit as st
-from database import register_user, login_user
+
+from database import (
+    register_user,
+    login_user,
+    is_admin
+)
 
 
 # =========================================================
@@ -41,6 +46,10 @@ def login_page():
 
     black_input_labels()
 
+    # Default login mode
+    if "login_mode" not in st.session_state:
+        st.session_state["login_mode"] = "user"
+
     st.title("📊 Job Market & Skill Demand Analyzer")
 
     st.caption(
@@ -58,11 +67,72 @@ def login_page():
         unsafe_allow_html=True
     )
 
+    # =====================================================
+    # LOGIN TYPE
+    # =====================================================
+
+    col1, col2 = st.columns(2)
+
+    with col1:
+
+        if st.button(
+            "👤 User Login",
+            use_container_width=True,
+            key="user_login_mode"
+        ):
+
+            st.session_state["login_mode"] = "user"
+
+            # Clear old login error/state
+            st.rerun()
+
+    with col2:
+
+        if st.button(
+            "🛡️ Admin Login",
+            use_container_width=True,
+            key="admin_login_mode"
+        ):
+
+            st.session_state["login_mode"] = "admin"
+
+            # Clear old login error/state
+            st.rerun()
+
+    st.divider()
+
+    # =====================================================
+    # LOGIN MODE TITLE
+    # =====================================================
+
+    if st.session_state["login_mode"] == "admin":
+
+        st.subheader("🛡️ Admin Login")
+
+        st.markdown(
+            "<p style='color:#4b5563;'>"
+            "Authorized administrators only."
+            "</p>",
+            unsafe_allow_html=True
+        )
+
+    else:
+
+        st.subheader("👤 User Login")
+
+    # =====================================================
+    # USERNAME
+    # =====================================================
+
     username = st.text_input(
         "👤 Username",
         placeholder="Enter your username",
         key="login_username"
     )
+
+    # =====================================================
+    # PASSWORD
+    # =====================================================
 
     st.markdown(
         "<div style='color:black; font-weight:600; margin-bottom:5px;'>"
@@ -78,11 +148,31 @@ def login_page():
         key="login_password"
     )
 
-    if st.button(
-        "🚀 Login to Dashboard",
-        use_container_width=True,
-        key="login_button"
-    ):
+    # =====================================================
+    # LOGIN BUTTON
+    # =====================================================
+
+    if st.session_state["login_mode"] == "admin":
+
+        login_button = st.button(
+            "🛡️ Login as Admin",
+            use_container_width=True,
+            key="admin_login_button"
+        )
+
+    else:
+
+        login_button = st.button(
+            "🚀 Login to Dashboard",
+            use_container_width=True,
+            key="login_button"
+        )
+
+    # =====================================================
+    # LOGIN PROCESS
+    # =====================================================
+
+    if login_button:
 
         if not username or not password:
 
@@ -94,26 +184,74 @@ def login_page():
 
             clean_username = username.strip()
 
-            # Check username and password directly
+            # -------------------------------------------------
+            # CHECK USERNAME AND PASSWORD
+            # -------------------------------------------------
+
             if login_user(clean_username, password):
 
-                # Save login session
-                st.session_state["logged_in"] = True
-                st.session_state["username"] = clean_username
-                st.session_state["profile_email"] = ""
-                st.session_state["page"] = "Dashboard"
+                # =================================================
+                # ADMIN LOGIN MODE
+                # =================================================
 
-                st.success(
-                    "✅ Login successful! Welcome back."
-                )
+                if st.session_state["login_mode"] == "admin":
 
-                st.rerun()
+                    if is_admin(clean_username):
+
+                        st.session_state["logged_in"] = True
+                        st.session_state["username"] = clean_username
+                        st.session_state["profile_email"] = ""
+                        st.session_state["page"] = "Admin"
+
+                        st.success(
+                            "🛡️ Admin login successful!"
+                        )
+
+                        st.rerun()
+
+                    else:
+
+                        st.error(
+                            "❌ This account does not have "
+                            "administrator access."
+                        )
+
+                # =================================================
+                # NORMAL USER LOGIN MODE
+                # =================================================
+
+                else:
+
+                    # Admin account cannot use normal user login
+                    if is_admin(clean_username):
+
+                        st.error(
+                            "❌ This is an administrator account. "
+                            "Please select 🛡️ Admin Login."
+                        )
+
+                    else:
+
+                        st.session_state["logged_in"] = True
+                        st.session_state["username"] = clean_username
+                        st.session_state["profile_email"] = ""
+                        st.session_state["page"] = "Dashboard"
+
+                        st.success(
+                            "✅ Login successful! Welcome back."
+                        )
+
+                        st.rerun()
 
             else:
 
                 st.error(
                     "❌ Invalid username or password."
                 )
+
+    # =========================================================
+    # CAREER INTELLIGENCE
+    # =========================================================
 
     st.divider()
 
@@ -141,6 +279,10 @@ def login_page():
             "💰 **Salary Insights**\n\n"
             "Explore salary trends and opportunities."
         )
+
+    # =========================================================
+    # CREATE ACCOUNT
+    # =========================================================
 
     st.divider()
 

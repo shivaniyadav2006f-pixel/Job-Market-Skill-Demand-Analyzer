@@ -3,11 +3,11 @@ import streamlit as st
 from styles import load_styles
 from auth import login_page, register_page
 from dashboard import dashboard
-from database import get_user
+from admin import admin_panel
 
 
 # =========================================================
-# PAGE CONFIGURATION
+# PAGE CONFIG
 # =========================================================
 
 st.set_page_config(
@@ -30,26 +30,55 @@ load_styles()
 # =========================================================
 
 if "logged_in" not in st.session_state:
+
     st.session_state.logged_in = False
 
+
 if "page" not in st.session_state:
+
     st.session_state.page = "Login"
 
+
 if "username" not in st.session_state:
+
     st.session_state.username = ""
 
 
 # =========================================================
-# PAGE CONTROL
+# PAGE ROUTING
 # =========================================================
 
 if st.session_state.logged_in:
 
-    dashboard()
+    # -----------------------------------------------------
+    # ADMIN
+    # -----------------------------------------------------
+
+    if st.session_state.page == "Admin":
+
+        admin_panel()
+
+    # -----------------------------------------------------
+    # NORMAL DASHBOARD
+    # -----------------------------------------------------
+
+    else:
+
+        dashboard()
+
+
+# =========================================================
+# REGISTER PAGE
+# =========================================================
 
 elif st.session_state.page == "Register":
 
     register_page()
+
+
+# =========================================================
+# LOGIN PAGE
+# =========================================================
 
 else:
 

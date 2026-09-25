@@ -61,7 +61,98 @@ def sidebar_filters(df):
 
     if location_column:
 
-        locations = sorted(
+        # -------------------------------------------------
+        # PREDEFINED LOCATIONS
+        # -------------------------------------------------
+
+        predefined_locations = [
+
+            # General
+            "All India",
+
+            # Mumbai
+            "Mumbai",
+            "Andheri",
+            "Borivali",
+            "Bandra",
+            "Powai",
+            "Goregaon",
+            "Malad",
+            "Thane",
+            "Kalyan",
+            "Dombivli",
+            "Navi Mumbai",
+
+            # Pune
+            "Pune",
+            "Hinjewadi",
+            "Kharadi",
+            "Wakad",
+            "Viman Nagar",
+            "Hadapsar",
+
+            # Delhi NCR
+            "Delhi",
+            "Noida",
+            "Greater Noida",
+            "Gurugram",
+            "Ghaziabad",
+            "Faridabad",
+
+            # Bengaluru
+            "Bengaluru",
+            "Whitefield",
+            "Electronic City",
+            "Koramangala",
+            "Marathahalli",
+
+            # Hyderabad
+            "Hyderabad",
+            "Hitech City",
+            "Gachibowli",
+            "Madhapur"
+        ]
+
+        # -------------------------------------------------
+        # INDIA STATES
+        # -------------------------------------------------
+
+        india_states = [
+            "Andhra Pradesh",
+            "Arunachal Pradesh",
+            "Assam",
+            "Bihar",
+            "Chhattisgarh",
+            "Goa",
+            "Gujarat",
+            "Haryana",
+            "Himachal Pradesh",
+            "Jharkhand",
+            "Karnataka",
+            "Kerala",
+            "Madhya Pradesh",
+            "Maharashtra",
+            "Manipur",
+            "Meghalaya",
+            "Mizoram",
+            "Nagaland",
+            "Odisha",
+            "Punjab",
+            "Rajasthan",
+            "Sikkim",
+            "Tamil Nadu",
+            "Telangana",
+            "Tripura",
+            "Uttar Pradesh",
+            "Uttarakhand",
+            "West Bengal"
+        ]
+
+        # -------------------------------------------------
+        # ADD LOCATIONS FROM DATASET
+        # -------------------------------------------------
+
+        dataset_locations = (
             df[location_column]
             .dropna()
             .astype(str)
@@ -70,9 +161,22 @@ def sidebar_filters(df):
             .tolist()
         )
 
+        # Combine predefined + states + dataset locations
+        all_locations = sorted(
+            set(
+                predefined_locations
+                + india_states
+                + dataset_locations
+            ),
+            key=lambda x: (
+                x != "All India",
+                x.lower()
+            )
+        )
+
         selected_location = st.sidebar.multiselect(
             "📍 Location",
-            locations,
+            all_locations,
             key="selected_location"
         )
 
@@ -85,12 +189,93 @@ def sidebar_filters(df):
 
     role_column = find_column(
         df,
-        ["Job Role", "Job Title", "Role", "Title", "Position", "Job"]
+        [
+            "Job Role",
+            "Job Title",
+            "Role",
+            "Title",
+            "Position",
+            "Job"
+        ]
     )
 
     if role_column:
 
-        roles = sorted(
+        # -------------------------------------------------
+        # PREDEFINED JOB ROLES
+        # -------------------------------------------------
+
+        predefined_roles = [
+
+            # Data & Analytics
+            "Data Analyst",
+            "Data Scientist",
+            "Data Engineer",
+            "Business Analyst",
+            "BI Analyst",
+            "Data Visualization Analyst",
+            "Machine Learning Engineer",
+            "AI Engineer",
+
+            # Software & Development
+            "Software Developer",
+            "Software Engineer",
+            "Python Developer",
+            "Java Developer",
+            "Full Stack Developer",
+            "Frontend Developer",
+            "Backend Developer",
+            "Web Developer",
+            "Mobile App Developer",
+
+            # Cloud & DevOps
+            "Cloud Engineer",
+            "Cloud Architect",
+            "DevOps Engineer",
+            "Site Reliability Engineer",
+            "System Engineer",
+            "Network Engineer",
+
+            # Cybersecurity
+            "Cybersecurity Analyst",
+            "Security Engineer",
+            "Information Security Analyst",
+            "SOC Analyst",
+            "Ethical Hacker",
+
+            # Testing & Quality
+            "QA Engineer",
+            "Software Tester",
+            "Automation Tester",
+            "Test Engineer",
+
+            # Business & Management
+            "Product Manager",
+            "Project Manager",
+            "Product Analyst",
+            "Business Consultant",
+            "Business Intelligence Analyst",
+
+            # Design
+            "UI/UX Designer",
+            "UX Designer",
+            "Graphic Designer",
+            "Product Designer",
+
+            # IT & Other Technology
+            "Database Administrator",
+            "System Administrator",
+            "Technical Support Engineer",
+            "IT Support Specialist",
+            "Solutions Architect",
+            "Technical Consultant"
+        ]
+
+        # -------------------------------------------------
+        # ADD ROLES FROM DATASET
+        # -------------------------------------------------
+
+        dataset_roles = (
             df[role_column]
             .dropna()
             .astype(str)
@@ -99,9 +284,14 @@ def sidebar_filters(df):
             .tolist()
         )
 
+        all_roles = sorted(
+            set(predefined_roles + dataset_roles),
+            key=lambda x: x.lower()
+        )
+
         selected_roles = st.sidebar.multiselect(
             "💼 Job Role",
-            roles,
+            all_roles,
             key="selected_roles"
         )
 
@@ -124,7 +314,26 @@ def sidebar_filters(df):
 
     if experience_column:
 
-        experiences = sorted(
+        # -------------------------------------------------
+        # PREDEFINED EXPERIENCE OPTIONS
+        # -------------------------------------------------
+
+        predefined_experience = [
+            "Fresher",
+            "0-1 Years",
+            "1-3 Years",
+            "2-4 Years",
+            "2-5 Years",
+            "3-5 Years",
+            "5-8 Years",
+            "8+ Years"
+        ]
+
+        # -------------------------------------------------
+        # ADD EXPERIENCE FROM DATASET
+        # -------------------------------------------------
+
+        dataset_experience = (
             df[experience_column]
             .dropna()
             .astype(str)
@@ -133,9 +342,17 @@ def sidebar_filters(df):
             .tolist()
         )
 
+        all_experience = sorted(
+            set(
+                predefined_experience
+                + dataset_experience
+            ),
+            key=lambda x: x.lower()
+        )
+
         selected_experience = st.sidebar.multiselect(
             "🧑‍💻 Experience",
-            experiences,
+            all_experience,
             key="selected_experience"
         )
 
@@ -185,17 +402,21 @@ def apply_filters(
 
     if location_column and selected_location:
 
-        selected_locations = {
-            normalize_filter_value(value)
-            for value in selected_location
-        }
+        # If "All India" is selected,
+        # do not apply location restriction.
+        if "All India" not in selected_location:
 
-        filtered_df = filtered_df[
-            filtered_df[location_column]
-            .astype(str)
-            .map(normalize_filter_value)
-            .isin(selected_locations)
-        ]
+            selected_locations = {
+                normalize_filter_value(value)
+                for value in selected_location
+            }
+
+            filtered_df = filtered_df[
+                filtered_df[location_column]
+                .astype(str)
+                .map(normalize_filter_value)
+                .isin(selected_locations)
+            ]
 
     # =====================================================
     # JOB ROLE FILTER

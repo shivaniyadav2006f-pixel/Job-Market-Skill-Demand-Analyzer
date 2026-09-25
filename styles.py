@@ -7,29 +7,455 @@ def load_styles():
         """
         <style>
 
-        /* =================================================
-           GLOBAL APP
-           ================================================= */
+        /* =====================================================
+           GLOBAL APP BACKGROUND
+           ===================================================== */
 
         .stApp {
-            background:
-                radial-gradient(
-                    circle at 10% 10%,
-                    rgba(99, 102, 241, 0.10),
-                    transparent 28%
-                ),
-                radial-gradient(
-                    circle at 90% 10%,
-                    rgba(139, 92, 246, 0.08),
-                    transparent 28%
-                ),
-                linear-gradient(
-                    135deg,
-                    #f8f9ff 0%,
-                    #f5f7ff 50%,
-                    #fbfcff 100%
-                );
+            background: linear-gradient(
+                135deg,
+                #f7f8ff 0%,
+                #eef1ff 100%
+            ) !important;
         }
+
+        [data-testid="stAppViewContainer"] {
+            background: transparent !important;
+        }
+
+        [data-testid="stMain"] {
+            background: transparent !important;
+        }
+
+        .block-container {
+            max-width: 1450px !important;
+            padding-top: 2rem !important;
+            padding-bottom: 2rem !important;
+        }
+
+
+        /* =====================================================
+           STREAMLIT TOP HEADER
+           Remove black top bar
+           ===================================================== */
+
+        header[data-testid="stHeader"] {
+            background: #f7f8ff !important;
+            box-shadow: none !important;
+        }
+
+        [data-testid="stHeader"] {
+            background: #f7f8ff !important;
+        }
+
+        [data-testid="stToolbar"] {
+            background: #f7f8ff !important;
+        }
+
+        [data-testid="stDecoration"] {
+            background: #f7f8ff !important;
+        }
+
+
+        /* =====================================================
+           MAIN CONTENT TEXT
+           ===================================================== */
+
+        [data-testid="stMain"]
+        [data-testid="stMarkdownContainer"] p,
+
+        [data-testid="stMain"]
+        [data-testid="stMarkdownContainer"] li,
+
+        [data-testid="stMain"]
+        [data-testid="stMarkdownContainer"] span,
+
+        [data-testid="stMain"]
+        [data-testid="stMarkdownContainer"] strong,
+
+        [data-testid="stMain"]
+        [data-testid="stMarkdownContainer"] em,
+
+        [data-testid="stMain"]
+        [data-testid="stMarkdownContainer"] div {
+            color: #111827 !important;
+            opacity: 1 !important;
+        }
+
+
+        /* =====================================================
+           MAIN HEADINGS
+           ===================================================== */
+
+        [data-testid="stMain"] h1,
+        [data-testid="stMain"] h2,
+        [data-testid="stMain"] h3,
+        [data-testid="stMain"] h4,
+        [data-testid="stMain"] h5,
+        [data-testid="stMain"] h6 {
+            color: #173b75 !important;
+            opacity: 1 !important;
+        }
+
+
+        /* =====================================================
+           CAPTIONS
+           ===================================================== */
+
+        [data-testid="stMain"]
+        [data-testid="stCaptionContainer"] {
+            color: #4b5563 !important;
+            opacity: 1 !important;
+        }
+
+
+        /* =====================================================
+           METRICS / KPI CARDS
+           ===================================================== */
+
+        [data-testid="stMetric"] {
+            background: #ffffff !important;
+            border-radius: 14px !important;
+            padding: 14px !important;
+            border: 1px solid #e5e7eb !important;
+        }
+
+        [data-testid="stMetricLabel"],
+        [data-testid="stMetricLabel"] *,
+        [data-testid="stMetricValue"],
+        [data-testid="stMetricValue"] *,
+        [data-testid="stMetricDelta"],
+        [data-testid="stMetricDelta"] * {
+            color: #111827 !important;
+            opacity: 1 !important;
+        }
+
+
+        /* =====================================================
+           TABS
+           ===================================================== */
+
+        [data-testid="stTabs"] button {
+            color: #173b75 !important;
+            font-weight: 600 !important;
+        }
+
+        [data-testid="stTabs"] button[aria-selected="true"] {
+            color: #173b75 !important;
+            font-weight: 800 !important;
+        }
+
+
+        /* =====================================================
+           EXPANDERS
+           ===================================================== */
+
+        [data-testid="stExpander"] {
+            background: #ffffff !important;
+            border: 1px solid #e5e7eb !important;
+            border-radius: 12px !important;
+        }
+
+        [data-testid="stExpander"] summary,
+        [data-testid="stExpander"] summary *,
+        [data-testid="stExpander"] p,
+        [data-testid="stExpander"] span {
+            color: #111827 !important;
+            opacity: 1 !important;
+        }
+
+
+        /* =====================================================
+           DATAFRAME / TABLE
+           ===================================================== */
+
+        [data-testid="stDataFrame"] {
+            background: #ffffff !important;
+        }
+
+
+        /* =====================================================
+           MAIN INPUT LABELS
+           ===================================================== */
+
+        [data-testid="stMain"]
+        [data-testid="stTextInput"] label,
+
+        [data-testid="stMain"]
+        [data-testid="stTextInput"] label *,
+
+        [data-testid="stMain"]
+        [data-testid="stNumberInput"] label,
+
+        [data-testid="stMain"]
+        [data-testid="stNumberInput"] label *,
+
+        [data-testid="stMain"]
+        [data-testid="stSelectbox"] label,
+
+        [data-testid="stMain"]
+        [data-testid="stSelectbox"] label *,
+
+        [data-testid="stMain"]
+        [data-testid="stMultiSelect"] label,
+
+        [data-testid="stMain"]
+        [data-testid="stMultiSelect"] label *,
+
+        [data-testid="stMain"]
+        [data-testid="stTextArea"] label,
+
+        [data-testid="stMain"]
+        [data-testid="stTextArea"] label * {
+            color: #111827 !important;
+            font-weight: 600 !important;
+        }
+
+
+        /* =====================================================
+           MAIN TEXT INPUTS
+           ===================================================== */
+
+        [data-testid="stMain"]
+        [data-testid="stTextInput"] input,
+
+        [data-testid="stMain"]
+        [data-testid="stNumberInput"] input,
+
+        [data-testid="stMain"]
+        [data-testid="stTextArea"] textarea {
+            color: #111827 !important;
+            background: #ffffff !important;
+            caret-color: #111827 !important;
+        }
+
+        [data-testid="stMain"]
+        [data-testid="stTextInput"] input::placeholder,
+
+        [data-testid="stMain"]
+        [data-testid="stNumberInput"] input::placeholder,
+
+        [data-testid="stMain"]
+        [data-testid="stTextArea"] textarea::placeholder {
+            color: #6b7280 !important;
+            opacity: 1 !important;
+        }
+
+
+        /* =====================================================
+           MAIN SELECTBOX / MULTISELECT
+           ===================================================== */
+
+        [data-testid="stMain"]
+        [data-testid="stSelectbox"] div,
+
+        [data-testid="stMain"]
+        [data-testid="stMultiSelect"] div {
+            color: #111827 !important;
+        }
+
+
+        /* =====================================================
+           BUTTONS
+           ===================================================== */
+
+        .stButton > button,
+        .stLinkButton > a {
+            font-weight: 600 !important;
+        }
+
+
+        /* =====================================================
+           SIDEBAR
+           ===================================================== */
+
+        section[data-testid="stSidebar"] {
+            background: #111827 !important;
+            border-right: 1px solid #1f2937 !important;
+        }
+
+        section[data-testid="stSidebar"] > div {
+            background: #111827 !important;
+        }
+
+        section[data-testid="stSidebar"] [data-testid="stSidebarContent"] {
+            background: #111827 !important;
+        }
+
+
+        /* =====================================================
+           SIDEBAR TEXT
+           ===================================================== */
+
+        section[data-testid="stSidebar"] p,
+        section[data-testid="stSidebar"] span,
+        section[data-testid="stSidebar"] label,
+        section[data-testid="stSidebar"] h1,
+        section[data-testid="stSidebar"] h2,
+        section[data-testid="stSidebar"] h3,
+        section[data-testid="stSidebar"] h4,
+        section[data-testid="stSidebar"] h5,
+        section[data-testid="stSidebar"] h6,
+        section[data-testid="stSidebar"] strong {
+            color: #ffffff !important;
+            opacity: 1 !important;
+        }
+
+
+        /* =====================================================
+           SIDEBAR MARKDOWN
+           ===================================================== */
+
+        section[data-testid="stSidebar"]
+        [data-testid="stMarkdownContainer"] p,
+
+        section[data-testid="stSidebar"]
+        [data-testid="stMarkdownContainer"] span,
+
+        section[data-testid="stSidebar"]
+        [data-testid="stMarkdownContainer"] strong,
+
+        section[data-testid="stSidebar"]
+        [data-testid="stMarkdownContainer"] div {
+            color: #ffffff !important;
+            opacity: 1 !important;
+        }
+
+
+        /* =====================================================
+           SIDEBAR INPUTS
+           ===================================================== */
+
+        section[data-testid="stSidebar"]
+        [data-testid="stTextInput"] input,
+
+        section[data-testid="stSidebar"]
+        [data-testid="stNumberInput"] input {
+            color: #111827 !important;
+            background: #ffffff !important;
+            border: 1px solid #d1d5db !important;
+        }
+
+        section[data-testid="stSidebar"]
+        [data-testid="stTextInput"] input::placeholder,
+
+        section[data-testid="stSidebar"]
+        [data-testid="stNumberInput"] input::placeholder {
+            color: #6b7280 !important;
+            opacity: 1 !important;
+        }
+
+
+        /* =====================================================
+           SIDEBAR SELECTBOX
+           ===================================================== */
+
+        section[data-testid="stSidebar"]
+        [data-testid="stSelectbox"] > div,
+
+        section[data-testid="stSidebar"]
+        [data-testid="stMultiSelect"] > div {
+            color: #111827 !important;
+        }
+
+        section[data-testid="stSidebar"]
+        [data-testid="stSelectbox"] div,
+
+        section[data-testid="stSidebar"]
+        [data-testid="stMultiSelect"] div {
+            color: #111827 !important;
+        }
+
+
+        /* =====================================================
+           SIDEBAR BUTTONS
+           ===================================================== */
+
+        section[data-testid="stSidebar"]
+        .stButton > button {
+            background: #1f2937 !important;
+            color: #ffffff !important;
+            border: 1px solid #374151 !important;
+            border-radius: 8px !important;
+        }
+
+        section[data-testid="stSidebar"]
+        .stButton > button:hover {
+            background: #374151 !important;
+            color: #ffffff !important;
+        }
+
+
+        /* =====================================================
+           SIDEBAR CHECKBOX / RADIO
+           ===================================================== */
+
+        section[data-testid="stSidebar"]
+        [data-testid="stCheckbox"] label,
+
+        section[data-testid="stSidebar"]
+        [data-testid="stRadio"] label {
+            color: #ffffff !important;
+        }
+
+        section[data-testid="stSidebar"]
+        [data-testid="stCheckbox"] label span,
+
+        section[data-testid="stSidebar"]
+        [data-testid="stRadio"] label span {
+            color: #ffffff !important;
+        }
+
+
+        /* =====================================================
+           SIDEBAR DIVIDER
+           ===================================================== */
+
+        section[data-testid="stSidebar"] hr {
+            border-color: #374151 !important;
+        }
+
+
+        /* =====================================================
+           ALERTS
+           ===================================================== */
+
+        [data-testid="stAlert"] p,
+        [data-testid="stAlert"] span,
+        [data-testid="stAlert"] div {
+            opacity: 1 !important;
+        }
+
+
+        /* =====================================================
+           JOB / RESUME CONTENT SAFETY
+           ===================================================== */
+
+        .live-job-title,
+        .live-job-title *,
+
+        .live-job-detail,
+        .live-job-detail *,
+
+        .live-job-description,
+        .live-job-description *,
+
+        .resume-content,
+        .resume-content *,
+
+        .resume-skill,
+        .resume-skill *,
+
+        .recommended-job,
+        .recommended-job * {
+            color: #111827 !important;
+            opacity: 1 !important;
+        }
+
+
+        /* =====================================================
+           HIDE STREAMLIT DEFAULT MENU / FOOTER
+           ===================================================== */
 
         #MainMenu {
             visibility: hidden;
@@ -37,274 +463,6 @@ def load_styles():
 
         footer {
             visibility: hidden;
-        }
-
-        header {
-            background: transparent;
-        }
-
-        .block-container {
-            padding-top: 28px;
-            padding-bottom: 40px;
-            max-width: 1450px;
-        }
-
-
-        /* =================================================
-           HEADINGS
-           ================================================= */
-
-        h1, h2, h3, h4, h5, h6 {
-            color: #172554 !important;
-        }
-
-        .main-title {
-            color: #172554 !important;
-            font-size: 38px;
-            font-weight: 800;
-            text-align: center;
-            line-height: 1.15;
-        }
-
-        .subtitle {
-            color: #000000 !important;
-            text-align: center;
-            font-size: 16px;
-            margin-bottom: 25px;
-        }
-
-        .section-title {
-            color: #172554 !important;
-            font-size: 25px;
-            font-weight: 800;
-            margin-top: 20px;
-        }
-
-
-        /* =================================================
-           LOGIN PAGE TEXT
-           ================================================= */
-
-        [data-testid="stTextInput"] label,
-        [data-testid="stTextInput"] label p {
-            color: #000000 !important;
-            font-weight: 600 !important;
-        }
-
-        [data-testid="stTextInput"] input {
-            color: #000000 !important;
-        }
-
-        [data-testid="stTextInput"] input::placeholder {
-            color: #000000 !important;
-            opacity: 1 !important;
-        }
-
-
-        /* =================================================
-           SIDEBAR
-           ================================================= */
-
-        [data-testid="stSidebar"] {
-            background: #111827 !important;
-            border-right: 1px solid #1f2937;
-        }
-
-        [data-testid="stSidebar"] > div:first-child {
-            padding-top: 22px;
-        }
-
-        [data-testid="stSidebar"] h1,
-        [data-testid="stSidebar"] h2,
-        [data-testid="stSidebar"] h3,
-        [data-testid="stSidebar"] h4 {
-            color: #ffffff !important;
-        }
-
-        [data-testid="stSidebar"] label {
-            color: #ffffff !important;
-            font-weight: 600 !important;
-        }
-
-        [data-testid="stSidebar"] p,
-        [data-testid="stSidebar"] span {
-            color: #ffffff !important;
-        }
-
-        [data-testid="stSidebar"] .stMarkdown {
-            color: #ffffff !important;
-        }
-
-
-        /* =================================================
-           SIDEBAR INPUTS
-           ================================================= */
-
-        [data-testid="stSidebar"] [data-baseweb="select"] {
-            background: #1f2937 !important;
-            border: 1px solid #374151 !important;
-            border-radius: 10px !important;
-        }
-
-        [data-testid="stSidebar"] [data-baseweb="select"] * {
-            color: #ffffff !important;
-        }
-
-        [data-testid="stSidebar"] input {
-            color: #ffffff !important;
-        }
-
-
-        /* =================================================
-           BUTTONS
-           ================================================= */
-
-        .stButton > button {
-            border-radius: 10px !important;
-            border: none !important;
-            min-height: 44px !important;
-            font-weight: 700 !important;
-            transition: all 0.2s ease;
-        }
-
-        .stButton > button:hover {
-            transform: translateY(-1px);
-            opacity: 0.94;
-        }
-
-        [data-testid="stSidebar"] .stButton > button {
-            background: #374151 !important;
-            color: #ffffff !important;
-            border: 1px solid #4b5563 !important;
-        }
-
-        [data-testid="stSidebar"] .stButton > button:hover {
-            background: #4b5563 !important;
-        }
-
-
-        /* =================================================
-           METRIC CARDS
-           ================================================= */
-
-        [data-testid="stMetric"] {
-            background: rgba(255, 255, 255, 0.92);
-            border: 1px solid #e2e8f0;
-            border-radius: 16px;
-            padding: 18px 18px 14px 18px;
-            box-shadow: 0 6px 20px rgba(15, 23, 42, 0.06);
-        }
-
-        [data-testid="stMetricLabel"] {
-            color: #000000 !important;
-            font-weight: 600 !important;
-        }
-
-        [data-testid="stMetricValue"] {
-            color: #172554 !important;
-            font-weight: 800 !important;
-        }
-
-        [data-testid="stMetricDelta"] {
-            color: #000000 !important;
-        }
-
-
-        
-
-        /* =================================================
-   TABS
-   ================================================= */
-
-.stTabs [data-baseweb="tab-list"] {
-    gap: 8px;
-    background: #ffffff !important;
-    padding: 8px;
-    border-radius: 14px;
-    border: 1px solid #e2e8f0;
-}
-
-/* Every tab */
-.stTabs [data-baseweb="tab"] {
-    border-radius: 10px !important;
-    padding: 12px 20px !important;
-    font-weight: 700 !important;
-    color: #000000 !important;
-    background: #ffffff !important;
-    opacity: 1 !important;
-}
-
-/* Tab text */
-.stTabs [data-baseweb="tab"] p,
-.stTabs [data-baseweb="tab"] span,
-.stTabs [data-baseweb="tab"] div {
-    color: #000000 !important;
-    opacity: 1 !important;
-    font-weight: 700 !important;
-}
-
-/* Selected tab */
-.stTabs [data-baseweb="tab"][aria-selected="true"] {
-    background: #eef2ff !important;
-    color: #000000 !important;
-    opacity: 1 !important;
-}
-
-/* Selected tab text */
-.stTabs [data-baseweb="tab"][aria-selected="true"] p,
-.stTabs [data-baseweb="tab"][aria-selected="true"] span,
-.stTabs [data-baseweb="tab"][aria-selected="true"] div {
-    color: #000000 !important;
-    opacity: 1 !important;
-    font-weight: 800 !important;
-}
-
-/* Tab hover */
-.stTabs [data-baseweb="tab"]:hover {
-    background: #f1f5f9 !important;
-    color: #000000 !important;
-}
-
-/* Active underline */
-.stTabs [data-baseweb="tab-highlight"] {
-    background: #000000 !important;
-}
-
-        /* =================================================
-           EXPANDER
-           ================================================= */
-
-        [data-testid="stExpander"] {
-            background: rgba(255, 255, 255, 0.85);
-            border: 1px solid #e2e8f0;
-            border-radius: 14px;
-        }
-
-        [data-testid="stExpander"] p,
-        [data-testid="stExpander"] span {
-            color: #000000 !important;
-        }
-
-
-        /* =================================================
-           DIVIDERS
-           ================================================= */
-
-        hr {
-            border-color: #e2e8f0 !important;
-        }
-
-
-        /* =================================================
-           CAPTIONS
-           ================================================= */
-
-        [data-testid="stCaptionContainer"] {
-            color: #000000 !important;
-        }
-
-        [data-testid="stCaptionContainer"] p {
-            color: #000000 !important;
         }
 
         </style>

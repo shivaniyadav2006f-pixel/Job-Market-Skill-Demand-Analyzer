@@ -1,4 +1,5 @@
 import streamlit as st
+import importlib
 
 from data_loader import load_data, find_column
 from filters import sidebar_filters, apply_filters
@@ -9,6 +10,12 @@ from tabs.skills import skills_tab
 from tabs.career import career_tab
 from tabs.salary import salary_tab
 from tabs.explorer import explorer_tab
+from resume_matcher import resume_matcher_tab
+from live_jobs import live_jobs_tab
+
+
+
+
 
 from database import (
     get_user,
@@ -409,14 +416,8 @@ def dashboard_header():
         "using your job-market dataset."
     )
 
-    if st.session_state.show_welcome:
-
-        st.write(
-            f"👋 **Welcome, {username}!**"
-        )
 
     st.divider()
-
 
 # =========================================================
 # KPI SECTION
@@ -639,6 +640,32 @@ def dashboard():
     ) = sidebar_filters(df)
 
     # -----------------------------------------------------
+    # LIVE API CONTROL
+    # -----------------------------------------------------
+
+    st.sidebar.divider()
+
+    st.sidebar.markdown(
+        "### 🌐 Live Job API"
+    )
+
+    use_live_api = st.sidebar.checkbox(
+        "Enable Live Job API",
+        value=True,
+        key="use_live_job_api"
+    )
+
+    if use_live_api:
+        st.sidebar.caption(
+            "Selected Job Role and Location will be used "
+            "for live job search."
+        )
+    else:
+        st.sidebar.caption(
+            "Live API search is disabled."
+        )
+
+    # -----------------------------------------------------
     # APPLY FILTERS
     # -----------------------------------------------------
 
@@ -723,15 +750,27 @@ def dashboard():
     # TABS
     # -----------------------------------------------------
 
-    overview, skills, career, salary, explorer = st.tabs(
-        [
-            "📊 Overview",
-            "🧠 Skill Intelligence",
-            "🎯 Career Intelligence",
-            "💰 Salary Intelligence",
-            "📄 Data Explorer"
-        ]
-    )
+    tab_labels = [
+        "📊 Overview",
+        "🧠 Skill Intelligence",
+        "🎯 Career Intelligence",
+        "💰 Salary Intelligence",
+        "📄 Data Explorer",
+        "📄 Resume Matcher",
+        "🌐 Live Jobs"
+    ]
+
+    dashboard_tabs = st.tabs(tab_labels)
+
+    (
+        overview,
+        skills,
+        career,
+        salary,
+        explorer,
+        resume_matcher,
+        live_jobs
+    ) = dashboard_tabs
 
     # -----------------------------------------------------
     # OVERVIEW
@@ -795,5 +834,24 @@ def dashboard():
     # -----------------------------------------------------
     # FOOTER
     # -----------------------------------------------------
+
+    # -----------------------------------------------------
+    # RESUME MATCHER
+    # -----------------------------------------------------
+
+    with resume_matcher:
+
+        resume_matcher_tab(
+            filtered_df
+        )
+
+    with live_jobs:
+        if live_jobs_tab is None:
+            st.error(
+                "❌ live_jobs.py could not be imported."
+            )
+        else:
+            live_jobs_tab(
+            )
 
     dashboard_footer()
